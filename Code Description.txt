@@ -1,0 +1,85 @@
+GBDT2NN with LightGBM Embeddings & Deep Neural Network
+This code implements a hybrid machine learning pipeline combining LightGBM gradient-boosted decision trees with a deep neural network (DNN) for binary classification on a BNPL (Buy Now, Pay Later) credit dataset.
+
+🔹 SECTION 1: Data Preprocessing
+Loads a CSV from Google Drive.
+
+Fills missing values and creates engineered features:
+
+Age-based filtering (Age Condition)
+
+Credit score-based eligibility
+
+Aggregated purchase frequency/amount
+
+Mapping categorical variables (e.g., Repeat Usage)
+
+Defines a custom credit recommendation function:
+Assigns credit amount & repayment period based on purchase history & payment status.
+
+Creates a binary target Target for credit eligibility.
+
+Normalizes features using StandardScaler.
+
+🔹 SECTION 2: LightGBM Training
+Trains a LightGBM binary classifier.
+
+Extracts leaf indices from all trees for each training/test sample.
+
+Converts these leaf indices into categorical embedding inputs for the NN.
+
+🔹 SECTION 3: Deep Neural Network with LightGBM Embeddings
+A custom PyTorch class LightGBM_Embedding_DNN:
+
+Embeds each leaf index into a learnable vector.
+
+Concatenates all embeddings with the original input features.
+
+Passes through fully-connected layers with ReLU, BatchNorm, Dropout.
+
+🔹 SECTION 4: Training Loop
+Trains the network using:
+
+CrossEntropyLoss
+
+Adam optimizer
+
+Logs training loss and accuracy per epoch.
+
+Validates model on the test set at each epoch.
+
+🔹 SECTION 5: Evaluation
+Computes metrics: Accuracy, Recall, Precision, F1, AUC, KS statistic.
+
+Uses best KS threshold to binarize probability predictions.
+
+📈 SECTION 6: Visualization
+KS Curve
+
+ROC Curve
+
+Precision-Recall Curve
+
+Confusion Matrix (basic + advanced)
+
+Gain & Lift Charts
+
+Training Loss / Accuracy per Epoch
+
+🔍 SECTION 7: SHAP Explainability
+Fits a simple linear model to visualize SHAP values.
+
+Generates SHAP summary plot to explain feature contributions.
+
+📁 SECTION 8: Save Results
+Saves enhanced DataFrame with predictions to CSV and downloads it.
+
+💡 Use Case
+This architecture is ideal for:
+
+Credit scoring pipelines
+
+Tabular data with strong non-linear relationships
+
+Scenarios requiring explainability + performance
+
